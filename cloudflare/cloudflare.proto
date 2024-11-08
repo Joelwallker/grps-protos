@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package cloudflare;
+
+option go_package = "/grpc-protos";
+
+import "common/server_info.proto";
+
+service CloudflareService {
+    rpc GetZones(GetZonesRequest) returns (GetZonesResponse);
+}
+
+message GetZonesRequest {
+    repeated string tokens = 1; // Список токенов Cloudflare
+    repeated string labels = 2; // Список лейблов
+}
+
+message GetZonesResponse {
+    message ZoneList {
+        repeated common.ServerInfo zones = 1;
+    }
+    map<string, ZoneList> zone_data = 1; // Сопоставление лейблов и зон
+}

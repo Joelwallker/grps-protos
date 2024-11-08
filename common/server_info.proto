@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package common;
+
+option go_package = "/grpc-protos";
+
+message ServerInfo {
+    string id = 1;
+    string name = 2;
+    PublicNet public_net = 3;
+    repeated PrivateNet private_nets = 4;
+    map<string, string> metadata = 5; // Метаданные
+
+    message PublicNet {
+        string ipv4 = 1;
+        string ipv6 = 2;
+    }
+
+    message PrivateNet {
+        string network_id = 1;
+        string ip = 2;
+    }
+}
+
+message TokenGroup {
+    string name = 1;
+    repeated string tokens = 2;
+}

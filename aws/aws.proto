@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package aws;
+
+option go_package = "/grpc-protos";
+
+import "common/server_info.proto";
+
+service AWSService {
+    rpc GetResources(GetResourcesRequest) returns (GetResourcesResponse);
+}
+
+message GetResourcesRequest {
+    repeated string credentials = 1; // Список учетных данных AWS (в виде JSON)
+    repeated string labels = 2; // Список лейблов
+}
+
+message GetResourcesResponse {
+    message ResourceList {
+        repeated common.ServerInfo resources = 1;
+    }
+    map<string, ResourceList> resource_data = 1; // Сопоставление лейблов и ресурсов
+}

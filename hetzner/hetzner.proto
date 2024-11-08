@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package hetzner;
+
+option go_package = "/grpc-protos";
+
+import "common/server_info.proto";
+
+service HetznerService {
+    rpc GetServers(GetServersRequest) returns (GetServersResponse);
+}
+
+message GetServersRequest {
+    repeated string tokens = 1; // Список токенов Hetzner
+    repeated string labels = 2; // Список лейблов
+}
+
+message GetServersResponse {
+    message ServerList {
+        repeated common.ServerInfo servers = 1;
+    }
+    map<string, ServerList> server_data = 1; // Сопоставление лейблов и серверов
+}

@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package reg_ru;
+
+option go_package = "/grpc-protos";
+
+import "common/server_info.proto";
+
+service RegRuService {
+    rpc GetResources(GetResourcesRequest) returns (GetResourcesResponse);
+}
+
+message GetResourcesRequest {
+    repeated string tokens = 1; // Список токенов Reg.ru
+    repeated string labels = 2; // Список лейблов
+}
+
+message GetResourcesResponse {
+    message ResourceList {
+        repeated common.ServerInfo resources = 1;
+    }
+    map<string, ResourceList> resource_data = 1; // Сопоставление лейблов и ресурсов
+}
